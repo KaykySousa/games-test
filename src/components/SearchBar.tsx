@@ -1,20 +1,33 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
-import { InputHTMLAttributes } from "react"
+import { useGames } from "../hooks/useGames"
+import Input from "./design/Input"
+import Select from "./design/Select"
 
-interface SearchBarProps extends InputHTMLAttributes<HTMLInputElement> {
-	genres: string[] | null
-	search: string
-	setSearch: React.Dispatch<React.SetStateAction<string>>
-	genre: string
-	setGenre: React.Dispatch<React.SetStateAction<string>>
+interface SearchBarProps {
+	className?: string
 }
 
-export default function SearchBar({ search, setSearch, genre, setGenre, genres }: SearchBarProps) {
+export default function SearchBar({ className = "" }: SearchBarProps) {
+	const { search, setSearch, genre, setGenre, genres } = useGames()
+
 	return (
-		<div className="shadow-md bg-gray-950 fixed w-full top-0 max-w-3xl flex flex-col md:flex-row md:items-center opacity-80 transition-opacity border-b shadow-rose-900 border-rose-600 md:border focus-within:ring-1 focus-within:ring-rose-600 hover:opacity-100 focus-within:opacity-100 md:w-[calc(100%-64px)] md:top-8 md:left-1/2 md:-translate-x-1/2 md:rounded-md">
-			<MagnifyingGlassIcon className="h-6 w-6 text-rose-600 ml-4 hidden md:block" />
-			<input type="search" placeholder="Busque sua próxima aventura!" className="px-4 py-3 flex-[2] text-white !border-0 !ring-0 bg-transparent" value={search} onChange={(e) => setSearch(e.target.value)} />
-			<select className="text-white px-4 py-3 flex-1 !border-0 !ring-0 bg-transparent" value={genre} onChange={(e) => setGenre(e.target.value)}>
+		<div className={`flex flex-col gap-2 md:flex-row ${className}`}>
+			<Input
+				type="search"
+				title="Buscar pelo título"
+				Icon={MagnifyingGlassIcon}
+				placeholder="Busque"
+				className="flex-[2]"
+				theme="secondary"
+				value={search}
+				onChange={(e) => setSearch(e.target.value)}
+			/>
+			<Select
+				className="flex-1"
+				title="Filtrar pelo gênero"
+				value={genre}
+				onChange={(e) => setGenre(e.target.value)}
+			>
 				<option value="" className="bg-gray-950">
 					Todos os Gêneros
 				</option>
@@ -23,7 +36,7 @@ export default function SearchBar({ search, setSearch, genre, setGenre, genres }
 						{genre}
 					</option>
 				))}
-			</select>
+			</Select>
 		</div>
 	)
 }

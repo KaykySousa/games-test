@@ -1,10 +1,10 @@
-export interface Game {
+export interface IGame {
 	id: number
 	title: string
 	thumbnail: string
 	short_description: string
 	game_url: string
-	genre: Genre
+	genre: IGenre
 	platform: string
 	publisher: string
 	developer: string
@@ -12,7 +12,7 @@ export interface Game {
 	freetogame_profile_url: string
 }
 
-export enum Genre {
+export enum IGenre {
 	ActionRPG = "Action RPG",
 	Arpg = "ARPG",
 	BattleRoyale = "Battle Royale",
