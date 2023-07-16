@@ -74,8 +74,10 @@ export default function Header() {
 						to="/favorites"
 						title="Ir para os favoritos"
 						onClick={(e) => {
-							e.preventDefault()
-							toast.info("Faça login para acessar os favoritos")
+							if (!user) {
+								e.preventDefault()
+								toast.info("Faça login para acessar os favoritos")
+							}
 						}}
 					>
 						<IconButton>
